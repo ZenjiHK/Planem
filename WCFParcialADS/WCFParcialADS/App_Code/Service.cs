@@ -95,6 +95,7 @@ public class Service : IService
 		{
 			da = new SqlDataAdapter("pa_SubDepartamento", Conexion);
 			da.SelectCommand.CommandType = CommandType.StoredProcedure;
+			da.SelectCommand.Parameters.AddWithValue("@id_departamento", id_departamento);
 			da.Fill(ds, "pa_SubDepartamento");
 			return ds;
 		}
