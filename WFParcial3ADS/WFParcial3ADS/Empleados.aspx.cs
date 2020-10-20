@@ -110,5 +110,15 @@ namespace WFParcial3ADS
                 lblError.Text = ex.Message;
             }
         }
+
+        protected void btnContrato_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Contratos.aspx");
+        }
+
+        protected void btnPlanilla_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("~/Planilla.aspx");
+        }
     }
 }

@@ -106,11 +106,10 @@
                     <asp:Label ID="lblError" runat="server"></asp:Label>
                     <br />
                     <div class="row">
-                        <div class="col-3"></div>
-                        <div class="col-3">
+                        <div class="col-4">
                             <asp:Button ID="btnInsertarEmpleado" class="btn btn-primary btn-lg btn-block" runat="server" Text="Insertar empleado" OnClick="btnInsertarEmpleado_Click" /></div>
-                        <div class="col-3"><asp:Button ID="btnPlanilla" class="btn btn-primary btn-lg btn-block" runat="server" Text="Crear/ver planillas" /></div>
-                        <div class="col-3"></div>
+                        <div class="col-4"><asp:Button ID="btnContrato" class="btn btn-primary btn-lg btn-block" runat="server" Text="Crear/ver contratos" OnClick="btnContrato_Click" /></div>
+                        <div class="col-4"><asp:Button ID="btnPlanilla" class="btn btn-primary btn-lg btn-block" runat="server" Text="Crear/ver planillas" OnClick="btnPlanilla_Click" /></div>
                     </div>
                     <br />
                     <div class="card">
