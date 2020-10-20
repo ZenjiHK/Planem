@@ -137,17 +137,17 @@ id_detalle_des int not null,
 constraint fk_rango_descuento foreign key(id_detalle_des) references descuento_ley_detalle(id_detalle_des)
 );
 
-insert into descuento_ley_detalle (id_tipo_des,porcentaje,categoria,posee_rango,vigencia) values(1, 0.03, 1, 0, 1);
 insert into descuento_ley_detalle (id_tipo_des,porcentaje,categoria,posee_rango,vigencia) values(2, 0.0, 1, 1, 1);
 insert into descuento_ley_detalle (id_tipo_des,porcentaje,categoria,posee_rango,vigencia) values(2, 0.1, 2, 1, 1);
 insert into descuento_ley_detalle (id_tipo_des,porcentaje,categoria,posee_rango,vigencia) values(2, 0.2, 3, 1, 1);
 insert into descuento_ley_detalle (id_tipo_des,porcentaje,categoria,posee_rango,vigencia) values(2, 0.3, 4, 1, 1);
+insert into descuento_ley_detalle (id_tipo_des,porcentaje,categoria,posee_rango,vigencia) values(1, 0.03, 1, 0, 1);
 insert into descuento_ley_detalle (id_tipo_des,porcentaje,categoria,posee_rango,vigencia) values(3, 0.0725, 1, 0, 1);
 
-insert into rango_descuento values(0.01,472.00, 0, 2);
-insert into rango_descuento values(472.01,895.24, 17.67, 3);
-insert into rango_descuento values(895.25,2038.10, 60, 4);
-insert into rango_descuento values(2038.10,NULL, 288.57, 5);
+insert into rango_descuento values(0.01,472.00, 0, 1);
+insert into rango_descuento values(472.01,895.24, 17.67, 2);
+insert into rango_descuento values(895.25,2038.10, 60, 3);
+insert into rango_descuento values(2038.10,NULL, 288.57, 4);
 
 go
 create procedure pa_boleta_pago
@@ -238,12 +238,16 @@ set @sueldo = @calculo_salario - (@afp + @isss) + @horas_extras;
 
 print 'sueldo: '+cast(@sueldo as varchar);
 
-if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=1) and @sueldo < (select rango_final from rango_descuento where id_detalle_des=1) 
+declare @ranin1 real = (select rango_inicial from rango_descuento where id_detalle_des=1)
+declare @ranfin1 real = (select rango_final from rango_descuento where id_detalle_des=1) 
+
+if @sueldo > @ranin1 and @sueldo < @ranfin1
 	begin
 		declare @exceso real = 0
 		declare @cuota real = 0
 		set @descuento_renta = @sueldo;
 	end
+
 else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=2) and @sueldo < (select rango_final from rango_descuento where id_detalle_des=2)
 	begin
 		declare @detalle int = (select top(1) id_detalle_des from descuento_ley_detalle where id_tipo_des = 2 and categoria = 2 order by fecha_registro desc)
@@ -251,6 +255,7 @@ else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_de
 		set @renta = (select top(1) porcentaje from descuento_ley_detalle where id_tipo_des = 2 and categoria = 2 order by fecha_registro desc)
 		set @cuota = (select cuota from rango_descuento where id_detalle_des = @detalle)
 	end
+
 else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=3) and @sueldo < (select rango_final from rango_descuento where id_detalle_des=3)
 	begin
 		set @exceso = (select rango_inicial-0.01 from rango_descuento where id_detalle_des=3)
@@ -258,6 +263,7 @@ else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_de
 		set @detalle = (select top(1) id_detalle_des from descuento_ley_detalle where id_tipo_des = 2 and categoria = 3 order by fecha_registro desc)
 		set @cuota  = (select cuota from rango_descuento where id_detalle_des = @detalle)
 	end
+
 else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=4)
 	begin
 		set @exceso = (select rango_inicial-0.01 from rango_descuento where id_detalle_des=4)
