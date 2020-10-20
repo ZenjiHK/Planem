@@ -156,41 +156,27 @@ create procedure pa_boleta_pago
 @pa_mes int
 as
 begin
-declare @horario int, @salario_base real, @tipo_empleado int, @calculo_salario real, @precio_hora real;
 
-declare @total_horas real = 0.0, @descuento real = 0.0, @horas_fuera real=0.0, @horas_extras real=0.0, @asis int=0;
+declare @calculo_salario real, @descuento real = 0.0, @horas_fuera real=0.0, @horas_extras real=0.0;
 declare @afp real=0.0, @isss real=0.0, @renta real=0.0, @sueldo real=0.0;
 declare @descuento_total real=0.0, @salario_neto real=0.0, @descuento_renta real=0.0, @descuentos_total real=0.0;
 ------------------------------------------------------------------------------------------------------------------------------------
 insert into asistencia_mensual(dias_asistidos, total_horas_realizadas, id_empleado, id_mes)
 values(@pa_dias, @pa_horas, @pa_empleado, @pa_mes);
 
-set @asis = (select (id_asistencia) from asistencia_mensual where id_empleado = @pa_empleado and id_asistencia = @@IDENTITY);
-
-set @horario = (select id_turno from contrato where id_empleado = @pa_empleado);
-print 'horario: '+cast(@horario as varchar);
-
-set @salario_base = (select salario_base from contrato where id_empleado = @pa_empleado);
-print 'salario base: '+cast(@salario_base as varchar);
-
-set @total_horas = (select (horas_semana) from contrato where id_empleado = @pa_empleado);
-print 'total horas: '+cast(@total_horas as varchar);
-
-set @total_horas = @total_horas * 4;
-print 'total horas: '+cast(@total_horas as varchar);
-
-set @precio_hora = @salario_base/@total_horas;
-print 'precio hora: '+cast(@precio_hora as varchar);
+declare @asis int = (select (id_asistencia) from asistencia_mensual where id_empleado = @pa_empleado and id_asistencia = @@IDENTITY);
+declare @horario int = (select id_turno from contrato where id_empleado = @pa_empleado);
+declare @salario_base real = (select salario_base from contrato where id_empleado = @pa_empleado);
+declare @total_horas real  = (select (horas_semana) from contrato where id_empleado = @pa_empleado) * 4;
+declare @precio_hora real = @salario_base/@total_horas;
 
 if @horario = 1 
 	begin
 		if @pa_horas >= @total_horas
 			begin
 				set @calculo_salario = @precio_hora * @pa_horas;
-				print 'calculo salario: '+cast(@calculo_salario as varchar);
 				set @descuento = 0.0;
 				set @horas_extras = ((@pa_horas - @total_horas) * @precio_hora) * 2;
-				print 'horas extras: '+cast(@horas_extras as varchar);
 			end
 		else	
 			begin
@@ -198,9 +184,6 @@ if @horario = 1
 				set @horas_fuera = @total_horas - @pa_horas;
 				set @descuento = @horas_fuera * @precio_hora;
 				set @calculo_salario = (@precio_hora * @pa_horas) - @descuento;
-				print 'horas fuera'+cast(@horas_fuera as varchar);
-				print 'descuento'+cast(@descuento as varchar);
-				print 'calculo salario: '+cast(@calculo_salario as varchar);
 			end
 	end
 else if @horario = 2
@@ -212,8 +195,6 @@ begin
 				set @calculo_salario = @precio_hora * @pa_horas;
 				set @descuento = 0.0;
 				set @horas_extras = ((@pa_horas - @total_horas) * @precio_hora) * 2;
-				print 'calculo salario: '+cast(@calculo_salario as varchar);
-				print 'horas extras: '+cast(@horas_extras as varchar);
 			end
 		else if @pa_horas < @total_horas
 			begin
@@ -221,21 +202,12 @@ begin
 				set @horas_fuera = @total_horas - @pa_horas;
 				set @descuento = @horas_fuera * @precio_hora;
 				set @calculo_salario = (@precio_hora * @pa_horas) - @descuento;
-				print 'horas fuera: '+cast(@horas_fuera as varchar);
-				print 'descuento: '+cast(@descuento as varchar);
-				print 'calculo salario: '+cast(@calculo_salario as varchar);
 			end
 end
 
 set @afp = (select top(1) (porcentaje) from descuento_ley_detalle where id_tipo_des=3 order by fecha_registro desc) * @calculo_salario;
 set @isss = (select top(1) (porcentaje) from descuento_ley_detalle where id_tipo_des=1 order by fecha_registro desc) * @calculo_salario;
-
-print 'afp: '+cast(@afp as varchar);
-print ' isss: '+cast(@isss as varchar); 
-
 set @sueldo = @calculo_salario - (@afp + @isss) + @horas_extras;
-
-print 'sueldo: '+cast(@sueldo as varchar);
 
 declare @ranin1 real = (select rango_inicial from rango_descuento where id_detalle_des=1)
 declare @ranfin1 real = (select rango_final from rango_descuento where id_detalle_des=1) 
@@ -272,19 +244,13 @@ else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_de
 	end
 
 set @descuento_renta = ((@sueldo -  @exceso) * @renta) + @cuota; 
-print 'total desc: '+cast(@descuento_renta as varchar);
-
 set @descuentos_total = @afp + @isss + @descuento_renta;
-print 'total desc: '+cast(@descuentos_total as varchar);
-
 set @salario_neto = @calculo_salario - @descuentos_total;
-print 'salario neto: '+cast(@salario_neto as varchar);
 
 insert into boleta_pago_mensual(id_asistencia,id_mes,total_desc,salario_neto)
 values(@asis,@pa_mes,round(@descuentos_total,2),round(@salario_neto,2));
 
 declare @boleta int = (select id_boleta from boleta_pago_mensual where id_boleta = @@IDENTITY);
-print 'Boleta id: '+cast(@boleta as varchar);
 
 insert into 
 detalle_boleta (id_boleta,id_mov,concepto,monto)
@@ -310,3 +276,4 @@ values
 	inner join tipo_movimiento m on m.id_movimiento = d.id_mov
 	where id_boleta = @boleta;
 end
+
