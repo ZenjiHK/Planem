@@ -1,6 +1,7 @@
---create database parcial3_kirio;
+create database parcial3_kirio;
+go
 use parcial3_kirio;
-
+go
 create table departamento(
 id_departamento int not null identity(1,1) primary key,
 nombre_departamento varchar(60) not null);
@@ -303,4 +304,22 @@ values
 	from detalle_boleta d
 	inner join tipo_movimiento m on m.id_movimiento = d.id_mov
 	where id_boleta = @boleta;
+end
+
+-- mantenimiento empleado
+go
+create procedure pa_NuevoEmpleado
+@nombres varchar(100),
+@apellidos varchar(100),
+@fecha_nacimiento date,
+@correo_electronico varchar(60),
+@dui varchar(12),
+@nit varchar(20),
+@telefono varchar(10),
+@direccion varchar(250),
+@id_departamento int ,
+@id_sexo int
+as
+begin 
+insert into empleados(nombres,apellidos,fecha_nacimiento,correo_electronico,dui,nit,telefono,direccion,id_departamento,id_sexo) values(@nombres,@apellidos,@fecha_nacimiento,@correo_electronico,@dui,@nit,@telefono,@direccion,@id_departamento,@id_sexo)
 end
