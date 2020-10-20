@@ -37,6 +37,12 @@ public interface IService
 	DataSet pa_Contrato(int id_empleado,int id_plaza,int id_turno,int horas_semana,double salario_base);
 	[OperationContract]
 	DataSet pa_boleta_pago(int pa_dias, double pa_horas, int pa_empleado, int pa_mes);
+	[OperationContract]
+	DataSet pa_EmpSinContrato();
+	[OperationContract]
+	DataSet pa_EmpleadosList();
+
+
 }
 
 // Utilice un contrato de datos, como se ilustra en el ejemplo siguiente, para agregar tipos compuestos a las operaciones de servicio.

@@ -83,7 +83,7 @@
                         <div class="col-3"></div>
                         <div class="col-3">Departamento</div>
                         <div class="col-3">
-                            <asp:DropDownList ID="ddlDepartamento" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlDepartamento" runat="server" AutoPostBack="True" OnSelectedIndexChanged="ddlDepartamento_SelectedIndexChanged"></asp:DropDownList>
                         </div>
                         <div class="col-3"></div>
                     </div>
@@ -99,15 +99,16 @@
                         <div class="col-3"></div>
                         <div class="col-3">Sexo</div>
                         <div class="col-3">
-                            <asp:DropDownList ID="ddlSexo" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlSexo" runat="server" AutoPostBack="True"></asp:DropDownList>
                         </div>
                         <div class="col-3"></div>
                     </div>
+                    <asp:Label ID="lblError" runat="server"></asp:Label>
                     <br />
                     <div class="row">
                         <div class="col-3"></div>
                         <div class="col-3">
-                            <asp:Button ID="btnInsertarEmpleado" class="btn btn-primary btn-lg btn-block" runat="server" Text="Insertar empleado" /></div>
+                            <asp:Button ID="btnInsertarEmpleado" class="btn btn-primary btn-lg btn-block" runat="server" Text="Insertar empleado" OnClick="btnInsertarEmpleado_Click" /></div>
                         <div class="col-3"><asp:Button ID="btnPlanilla" class="btn btn-primary btn-lg btn-block" runat="server" Text="Crear/ver planillas" /></div>
                         <div class="col-3"></div>
                     </div>

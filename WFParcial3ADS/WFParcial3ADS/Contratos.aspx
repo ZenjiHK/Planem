@@ -20,7 +20,7 @@
                         <div class="col-3"></div>
                         <div class="col-3">Empleado</div>
                         <div class="col-3">
-                            <asp:DropDownList ID="ddlEmpleado" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlEmpleado" runat="server" AutoPostBack="True"></asp:DropDownList>
                         </div>
                         <div class="col-3"></div>
                     </div>
@@ -28,7 +28,7 @@
                         <div class="col-3"></div>
                         <div class="col-3">Plaza</div>
                         <div class="col-3">
-                            <asp:DropDownList ID="ddlPlaza" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlPlaza" runat="server" AutoPostBack="True"></asp:DropDownList>
                         </div>
                         <div class="col-3"></div>
                     </div>
@@ -36,7 +36,7 @@
                         <div class="col-3"></div>
                         <div class="col-3">Turno</div>
                         <div class="col-3">
-                            <asp:DropDownList ID="ddlTurno" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlTurno" runat="server" AutoPostBack="True"></asp:DropDownList>
                         </div>
                         <div class="col-3"></div>
                     </div>
@@ -57,9 +57,11 @@
                     </div>                    
                     <br />
                     <div class="row">
-                        <div class="col-4"></div>
                         <div class="col-4">
-                            <asp:Button ID="btnInsertarContrato" class="btn btn-primary btn-lg btn-block" runat="server" Text="Crear contrato" /></div>
+                            <asp:Label ID="lblError" runat="server"></asp:Label>
+                        </div>
+                        <div class="col-4">
+                            <asp:Button ID="btnInsertarContrato" class="btn btn-primary btn-lg btn-block" runat="server" Text="Crear contrato" OnClick="btnInsertarContrato_Click" /></div>
                         <div class="col-4"></div>
                     </div>
                     <br />

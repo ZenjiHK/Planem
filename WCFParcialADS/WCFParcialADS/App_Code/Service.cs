@@ -187,4 +187,35 @@ public class Service : IService
 				return null;
 			}
 		}
+	public DataSet pa_EmpSinContrato()
+	{
+		try
+		{
+			da = new SqlDataAdapter("pa_EmpSinContrato", Conexion);
+			da.SelectCommand.CommandType = CommandType.StoredProcedure;
+			da.Fill(ds, "pa_EmpSinContrato");
+			return ds;
+		}
+		catch (Exception)
+		{//Enviar correo al administrador o al programador del error ocurrido
+			return null;
+		}
+
+	}
+	public DataSet pa_EmpleadosList()
+	{
+		try
+		{
+			da = new SqlDataAdapter("pa_EmpleadosList", Conexion);
+			da.SelectCommand.CommandType = CommandType.StoredProcedure;
+			da.Fill(ds, "pa_EmpleadosList");
+			return ds;
+		}
+		catch (Exception)
+		{//Enviar correo al administrador o al programador del error ocurrido
+			return null;
+		}
+
+	}
+
 }

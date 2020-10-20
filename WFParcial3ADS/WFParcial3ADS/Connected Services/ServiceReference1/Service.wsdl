@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:61909/Service.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:61909/Service.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:61909/Service.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/" />
+      <xsd:import schemaLocation="http://localhost:61909/Service.svc?xsd=xsd3" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IService_GetData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetData" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetDataUsingDataContract_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataUsingDataContract" />
+  </wsdl:message>
+  <wsdl:message name="IService_GetDataUsingDataContract_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_NuevoEmpleado_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_NuevoEmpleado" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_NuevoEmpleado_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_NuevoEmpleadoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_sexo_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_sexo" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_sexo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_sexoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_Departamento_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_Departamento" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_Departamento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_DepartamentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_SubDepartamento_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_SubDepartamento" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_SubDepartamento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_SubDepartamentoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_Turno_Horario_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_Turno_Horario" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_Turno_Horario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_Turno_HorarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_Plaza_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_Plaza" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_Plaza_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_PlazaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_Mes_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_Mes" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_Mes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_MesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_Contrato_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_Contrato" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_Contrato_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_ContratoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_boleta_pago_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_boleta_pago" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_boleta_pago_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_boleta_pagoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_EmpSinContrato_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_EmpSinContrato" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_EmpSinContrato_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_EmpSinContratoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_EmpleadosList_InputMessage">
+    <wsdl:part name="parameters" element="tns:pa_EmpleadosList" />
+  </wsdl:message>
+  <wsdl:message name="IService_pa_EmpleadosList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pa_EmpleadosListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IService">
+    <wsdl:operation name="GetData">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetData" message="tns:IService_GetData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetDataResponse" message="tns:IService_GetData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDataUsingDataContract">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/GetDataUsingDataContract" message="tns:IService_GetDataUsingDataContract_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/GetDataUsingDataContractResponse" message="tns:IService_GetDataUsingDataContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_NuevoEmpleado">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_NuevoEmpleado" message="tns:IService_pa_NuevoEmpleado_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_NuevoEmpleadoResponse" message="tns:IService_pa_NuevoEmpleado_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_sexo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_sexo" message="tns:IService_pa_sexo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_sexoResponse" message="tns:IService_pa_sexo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_Departamento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_Departamento" message="tns:IService_pa_Departamento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_DepartamentoResponse" message="tns:IService_pa_Departamento_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_SubDepartamento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_SubDepartamento" message="tns:IService_pa_SubDepartamento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_SubDepartamentoResponse" message="tns:IService_pa_SubDepartamento_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_Turno_Horario">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_Turno_Horario" message="tns:IService_pa_Turno_Horario_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_Turno_HorarioResponse" message="tns:IService_pa_Turno_Horario_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_Plaza">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_Plaza" message="tns:IService_pa_Plaza_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_PlazaResponse" message="tns:IService_pa_Plaza_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_Mes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_Mes" message="tns:IService_pa_Mes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_MesResponse" message="tns:IService_pa_Mes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_Contrato">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_Contrato" message="tns:IService_pa_Contrato_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_ContratoResponse" message="tns:IService_pa_Contrato_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_boleta_pago">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_boleta_pago" message="tns:IService_pa_boleta_pago_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_boleta_pagoResponse" message="tns:IService_pa_boleta_pago_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_EmpSinContrato">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_EmpSinContrato" message="tns:IService_pa_EmpSinContrato_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_EmpSinContratoResponse" message="tns:IService_pa_EmpSinContrato_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pa_EmpleadosList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/pa_EmpleadosList" message="tns:IService_pa_EmpleadosList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/pa_EmpleadosListResponse" message="tns:IService_pa_EmpleadosList_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IService" type="tns:IService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetData">
+      <soap:operation soapAction="http://tempuri.org/IService/GetData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDataUsingDataContract">
+      <soap:operation soapAction="http://tempuri.org/IService/GetDataUsingDataContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_NuevoEmpleado">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_NuevoEmpleado" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_sexo">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_sexo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_Departamento">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_Departamento" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_SubDepartamento">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_SubDepartamento" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_Turno_Horario">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_Turno_Horario" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_Plaza">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_Plaza" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_Mes">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_Mes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_Contrato">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_Contrato" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_boleta_pago">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_boleta_pago" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_EmpSinContrato">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_EmpSinContrato" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pa_EmpleadosList">
+      <soap:operation soapAction="http://tempuri.org/IService/pa_EmpleadosList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="BasicHttpBinding_IService" binding="tns:BasicHttpBinding_IService">
+      <soap:address location="http://localhost:61909/Service.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
