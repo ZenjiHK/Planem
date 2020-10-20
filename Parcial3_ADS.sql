@@ -329,3 +329,59 @@ as
 begin 
 insert into empleados(nombres,apellidos,fecha_nacimiento,correo_electronico,dui,nit,telefono,direccion,id_departamento,id_sexo) values(@nombres,@apellidos,@fecha_nacimiento,@correo_electronico,@dui,@nit,@telefono,@direccion,@id_departamento,@id_sexo)
 end
+
+-- almacenados para catalogos
+go
+create procedure pa_sexo
+as
+begin
+select * from sexo;
+end
+
+go
+create procedure pa_Departamento
+as
+begin
+select * from departamento;
+end
+
+go
+create procedure pa_SubDepartamento
+@id_departamento int
+as
+begin 
+select * from subdepartamento where id_departamento=@id_departamento;
+end
+
+go
+create procedure pa_Turno_Horario
+as
+begin
+select * from turno_horario;
+end
+
+go
+create procedure pa_Plaza
+as
+begin
+select * from plaza;
+end
+
+go
+create procedure pa_Mes
+as
+begin
+select * from mes;
+end
+
+go
+create procedure pa_Contrato
+@id_empleado int,
+@id_plaza int ,
+@id_turno int ,
+@horas_semana int ,
+@salario_base real
+as
+begin
+insert into contrato(id_empleado,id_plaza,id_turno,horas_semana,salario_base)values (@id_empleado,@id_plaza,@id_turno,@horas_semana,@salario_base);
+end
