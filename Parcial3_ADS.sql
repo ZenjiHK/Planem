@@ -221,11 +221,8 @@ begin
 			end
 end
 
-declare @descuento_afp real;
-set @descuento_afp = (select top(1) (porcentaje) from descuento_ley_detalle where id_tipo_des=1 order by fecha_registro desc);
-
-set @afp = @calculo_salario * 0.06;
-set @isss = @calculo_salario *0.03;
+set @afp = (select top(1) (porcentaje) from descuento_ley_detalle where id_tipo_des=3 order by fecha_registro desc) * @calculo_salario;
+set @isss = (select top(1) (porcentaje) from descuento_ley_detalle where id_tipo_des=1 order by fecha_registro desc) * @calculo_salario;
 
 print 'afp: '+cast(@afp as varchar);
 print ' isss: '+cast(@isss as varchar); 
@@ -234,19 +231,19 @@ set @sueldo = @calculo_salario - (@afp + @isss) + @horas_extras;
 
 print 'sueldo: '+cast(@sueldo as varchar);
 
-if @sueldo >0.01 and @sueldo <472 
+if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=1) and @sueldo < (select rango_final from rango_descuento where id_detalle_des=1) 
 	begin
-		set @descuento_renta = ((@sueldo - 0)*0.00)+0;
+		set @descuento_renta = @sueldo;
 	end
-else if @sueldo >472 and @sueldo <895.24 
+else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=2) and @sueldo < (select rango_final from rango_descuento where id_detalle_des=2)
 	begin
 		set @descuento_renta = ((@sueldo - 472)*0.10)+17.67;
 	end
-else if @sueldo >895.24 and @sueldo <2038.10 
+else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=3) and @sueldo < (select rango_final from rango_descuento where id_detalle_des=3)
 	begin
 		set @descuento_renta = (((@sueldo - 895.24)*0.20)+60);
 	end
-else
+else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=4)
 	begin
 		set @descuento_renta = (((@sueldo - 2038.10)*0.30)+288.57);
 	end
