@@ -81,6 +81,14 @@
                     </div>
                     <div class="row">
                         <div class="col-3"></div>
+                        <div class="col-3">Departamento</div>
+                        <div class="col-3">
+                            <asp:DropDownList ID="ddlDepartamento" runat="server"></asp:DropDownList>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3"></div>
                         <div class="col-3">Subdepartamento</div>
                         <div class="col-3">
                             <asp:DropDownList ID="ddlSubdepartamento" runat="server"></asp:DropDownList>

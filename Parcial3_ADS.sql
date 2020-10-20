@@ -1,5 +1,5 @@
-create database parcial3_kirio;
-go
+--create database parcial3_kirio;
+
 use parcial3_kirio;
 go
 create table departamento(
