@@ -36,6 +36,10 @@ id_departamento int not null,
 id_sexo int not null,
 constraint fk_sexo_empleado foreign key (id_sexo)references sexo(id_sexo),
 constraint fk_empleado_depa foreign key (id_departamento) references subdepartamento(id_subdepartamento));
+insert into empleados(nombres,apellidos,fecha_nacimiento,correo_electronico,dui,telefono,direccion,id_departamento,id_sexo)
+values('Pedro', 'Molina', '1990-10-10','pedro@gmail.com','0615487-0','7845-7845','San Salvador',1,2);
+insert into empleados(nombres,apellidos,fecha_nacimiento,correo_electronico,dui,telefono,direccion,id_departamento,id_sexo)
+values('Carlos', 'Rodriguez', '1990-10-10','carlos@gmail.com','0784510-0','7845-7845','San Salvador',1,2);
 
 create table plaza(
 id_plaza int not null identity(1,1) primary key,
@@ -60,6 +64,8 @@ estado bit default (1),
 constraint fk_plaza_contrato foreign key(id_plaza) references plaza(id_plaza),
 constraint fk_empleado_contrato foreign key(id_empleado) references empleados (id_empleado),
 constraint fk_turno_contrato foreign key (id_turno) references turno_horario(id_turno));
+insert into contrato (id_empleado,id_plaza,id_turno,horas_semana,salario_base) values(1,1,1,40,500);
+insert into contrato (id_empleado,id_plaza,id_turno,horas_semana,salario_base) values(2,1,2,35,500);
 
 create table mes(
 id_mes int not null identity(1,1) primary key,
@@ -233,20 +239,34 @@ print 'sueldo: '+cast(@sueldo as varchar);
 
 if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=1) and @sueldo < (select rango_final from rango_descuento where id_detalle_des=1) 
 	begin
+		declare @exceso real = 0
+		declare @cuota real = 0
 		set @descuento_renta = @sueldo;
 	end
 else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=2) and @sueldo < (select rango_final from rango_descuento where id_detalle_des=2)
 	begin
-		set @descuento_renta = ((@sueldo - 472)*0.10)+17.67;
+		declare @detalle int = (select top(1) id_detalle_des from descuento_ley_detalle where id_tipo_des = 2 and categoria = 2 order by fecha_registro desc)
+		set @exceso = ((select rango_inicial-0.01 from rango_descuento where id_detalle_des=2))
+		set @renta = (select top(1) porcentaje from descuento_ley_detalle where id_tipo_des = 2 and categoria = 2 order by fecha_registro desc)
+		set @cuota = (select cuota from rango_descuento where id_detalle_des = @detalle)
 	end
 else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=3) and @sueldo < (select rango_final from rango_descuento where id_detalle_des=3)
 	begin
-		set @descuento_renta = (((@sueldo - 895.24)*0.20)+60);
+		set @exceso = (select rango_inicial-0.01 from rango_descuento where id_detalle_des=3)
+		set @renta = (select top(1) porcentaje from descuento_ley_detalle where id_tipo_des = 2 and categoria = 3 order by fecha_registro desc)
+		set @detalle = (select top(1) id_detalle_des from descuento_ley_detalle where id_tipo_des = 2 and categoria = 3 order by fecha_registro desc)
+		set @cuota  = (select cuota from rango_descuento where id_detalle_des = @detalle)
 	end
 else if @sueldo > (select rango_inicial from rango_descuento where id_detalle_des=4)
 	begin
-		set @descuento_renta = (((@sueldo - 2038.10)*0.30)+288.57);
+		set @exceso = (select rango_inicial-0.01 from rango_descuento where id_detalle_des=4)
+		set @renta = (select top(1) porcentaje from descuento_ley_detalle where id_tipo_des = 2 and categoria = 4 order by fecha_registro desc)
+		set @detalle = (select top(1) id_detalle_des from descuento_ley_detalle where id_tipo_des = 2 and categoria = 4 order by fecha_registro desc)
+		set @cuota  = (select cuota from rango_descuento where id_detalle_des = @detalle)
 	end
+
+set @descuento_renta = ((@sueldo -  @exceso) * @renta) + @cuota; 
+print 'total desc: '+cast(@descuento_renta as varchar);
 
 set @descuentos_total = @afp + @isss + @descuento_renta;
 print 'total desc: '+cast(@descuentos_total as varchar);
@@ -257,9 +277,7 @@ print 'salario neto: '+cast(@salario_neto as varchar);
 insert into boleta_pago_mensual(id_asistencia,id_mes,total_desc,salario_neto)
 values(@asis,@pa_mes,round(@descuentos_total,2),round(@salario_neto,2));
 
-declare @boleta int;
-set @boleta = (select id_boleta from boleta_pago_mensual where id_boleta = @@IDENTITY);
-
+declare @boleta int = (select id_boleta from boleta_pago_mensual where id_boleta = @@IDENTITY);
 print 'Boleta id: '+cast(@boleta as varchar);
 
 insert into 
